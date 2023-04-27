@@ -60,10 +60,11 @@ export class ProfileController {
         let repo = ProfileRepositery.getInstance();
         try {
             let result = await repo.deleteRecord(param);
+            console.log(result);
             if (result.status) {
                 res.status(200).send({ error: false, message: result.record });
             } else {
-                res.status(500).send(result.error);
+                res.status(402).send({ "error": true, "message": "No User Found" });
             }
         } catch (error) {
             res.status(500).send(error);

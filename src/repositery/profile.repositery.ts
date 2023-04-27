@@ -103,20 +103,29 @@ export class ProfileRepositery {
 
 
     async deleteRecord(param: any) {
+        console.log(param);
         if (param.user !== undefined) {
             try {
                 const jsonRecords = await fs.promises.readFile(this.filePath, { encoding: 'utf8' })
                 const objRecord: IProfile[] = JSON.parse(jsonRecords)
+                let index = 0;
+                if (objRecord.some((record: any, i) => { index = i; return record.id === param.id })) {
+                    objRecord.splice(index, 1);
+                    await fs.promises.writeFile(this.filePath, JSON.stringify(objRecord, null, 2))
 
-                let index = objRecord.findIndex((record: any) => record.id === param.id);
-                objRecord.splice(index, 1);
-                await fs.promises.writeFile(this.filePath, JSON.stringify(objRecord, null, 2))
+                    return { status: true, record: param }
+                }
+                else {
+                    return { status: false, error: "No User Found" }
+                }
 
-                return { status: true, record: param }
             }
             catch (error) {
                 return { status: false, error: error }
             }
+        }
+        else{
+            return { status: false, error: "Bad Request" }
         }
     }
 

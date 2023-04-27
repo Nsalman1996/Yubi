@@ -71,19 +71,19 @@ async function getData() {
                 userTable.push(rowData.user);
 
                 button.addEventListener('click', (e) => {
-                    const user = e.target.closest('tr').querySelector('td:nth-child(1)').innerText;
+                    const row = e.target.closest('tr').querySelector('td:nth-child(1)');
+                    var user = row.querySelector('input').dataset.object;
 
                     const url = 'http://localhost:3000/api/profile/deleteUser';
-                    let obj = {
-                        user: user
-                    }
+
                     const options = {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(obj)
+                        body: user
                     };
+
                     performHttpRequest(url, options).then(response => {
                         if (!response.error) {
                             deleteRow(user)
@@ -137,23 +137,19 @@ async function updateUser(data) {
         },
         body: JSON.stringify(data)
     };
+    await performHttpRequest(url, options).then(response => {
 
-    fetch(url, options)
-        .then(response => {
-            return response.json();
-        }).then(response => {
-
-            if (!response.error) {
-                console.log(response);
-            } else {
-                let myElement = document.getElementById("userError");
-                const input = document.getElementById('user');
-                input.classList.add('is-invalid');
-                myElement.innerText = response.message;
-                input.classList.add('is-invalid');
-                console.log(response);
-            }
-        })
+        if (!response.error) {
+            console.log(response);
+        } else {
+            let myElement = document.getElementById("userError");
+            const input = document.getElementById('user');
+            input.classList.add('is-invalid');
+            myElement.innerText = response.message;
+            input.classList.add('is-invalid');
+            console.log(response);
+        }
+    })
         .catch(error => {
 
             console.error(error);
