@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>OTP</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+
+</head>
+
+<body>
+	<div class="container">
+		<div class="row justify-content-center mt-5">
+			<div class="col-md-4">
+				<form id="otp-form">
+					<div class="mb-3">
+						<label for="otp" class="form-label text-dark">Enter OTP</label>
+						<input type="number" class="form-control" id="otpInput"  maxlength = "4"placeholder="Enter OTP" onkeyup = "handleInputChange(this)"/>
+						<div id="otpError" class="invalid-feedback"></div>
+					</div>
+					<!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="../js/otp.js"></script>
+</body>
+
+</html>
+
